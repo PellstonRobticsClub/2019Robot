@@ -59,7 +59,7 @@ public class shooterPivotSubSystem extends PIDSubsystem {
 
     double outspeed=speed;
    
-    if(pivot.getSensorCollection().getPulseWidthPosition()<2400){
+    if(pivot.getSensorCollection().getPulseWidthPosition()<-2400){
       outspeed=Math.max(speed, 0);
     }
    // if(pivot.getSensorCollection().getPulseWidthPosition()>3250&&speed>0){

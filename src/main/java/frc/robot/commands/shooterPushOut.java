@@ -15,6 +15,7 @@ public class shooterPushOut extends Command {
     requires(Robot.m_ShooterIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +26,7 @@ public class shooterPushOut extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_ShooterIntake.spin(-1);
+    Robot.m_ShooterIntake.spin(-.5);
   }
 
   // Make this return true when this Command no longer needs to run execute()

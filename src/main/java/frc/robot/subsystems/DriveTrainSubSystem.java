@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -21,6 +22,7 @@ import frc.robot.commands.driveWithJoystick;
  * Add your docs here.
  */
 public class DriveTrainSubSystem extends Subsystem {
+
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   CANSparkMax FrontLeftMotor = new CANSparkMax(11, MotorType.kBrushless);
@@ -28,9 +30,12 @@ public class DriveTrainSubSystem extends Subsystem {
   CANSparkMax RearLeftMotor = new CANSparkMax(13, MotorType.kBrushless);
   CANSparkMax RearRightMotor = new CANSparkMax(14, MotorType.kBrushless);
   MecanumDrive MecDrive = new MecanumDrive(FrontLeftMotor, RearLeftMotor, FrontRightMotor, RearRightMotor);
+  CANEncoder FLencoder =new CANEncoder(FrontLeftMotor);
   public AHRS gyro = new AHRS(Port.kMXP);
-  public void Drive (double xSpeed,double ySpeed,double zTwist){
-    MecDrive.driveCartesian(-ySpeed, xSpeed, zTwist,-gyro.getYaw());
+
+  
+  public void Drive (double ySpeed,double xSpeed,double zTwist){
+    MecDrive.driveCartesian(ySpeed, -xSpeed, zTwist,-gyro.getYaw());
 
   }
    @Override
@@ -43,6 +48,9 @@ public void stop() {
   MecDrive.driveCartesian(0, 0, 0);
 }
 public void periodic(){
-  SmartDashboard.putNumber("drive ticks", FrontLeftMotor.getEncoder().getPosition());
+  SmartDashboard.putNumber("drive ticks", FrontLeftMotor.getEncoder().getPosition()*1494);
+}
+public double getPosition(){
+return FrontLeftMotor.getEncoder().getPosition()*1494;
 }
 }

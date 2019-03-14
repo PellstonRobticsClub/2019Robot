@@ -19,6 +19,7 @@ public class shooterPivotSubSystem extends PIDSubsystem {
   
   private WPI_TalonSRX pivot = new WPI_TalonSRX(1);
   private WPI_TalonSRX pivot_2 = new WPI_TalonSRX(2);
+  private int pTimer =0;
   private WPI_TalonSRX Kicker = new  WPI_TalonSRX(6);
   
   /**
@@ -62,13 +63,13 @@ public class shooterPivotSubSystem extends PIDSubsystem {
     if(pivot.getSensorCollection().getPulseWidthPosition()<-2400){
       outspeed=Math.max(speed, 0);
     }
-   // if(pivot.getSensorCollection().getPulseWidthPosition()>3250&&speed>0){
+    if(pivot.getSensorCollection().getPulseWidthPosition()>3250&&speed>0){
       
       if(pivot.getSensorCollection().getPulseWidthPosition()>3550){
         outspeed=Math.min(speed, 0);
-     // }else{
-       // outspeed=speed*.5;
-      //}
+      }else{
+        outspeed=speed*.5;
+      }
     }
     
    
@@ -87,6 +88,10 @@ public class shooterPivotSubSystem extends PIDSubsystem {
     Kicker.set(0);
   }
   public void periodic(){
-    SmartDashboard.putNumber("pivot Position", pivot.getSensorCollection().getPulseWidthPosition());
+   // if (pTimer == 10){
+     //  SmartDashboard.putNumber("pivot Position", pivot.getSensorCollection().getPulseWidthPosition());
+   // }
+   // pTimer++; 
   }
+  
 }

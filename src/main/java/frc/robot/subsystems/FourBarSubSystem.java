@@ -74,7 +74,10 @@ public class FourBarSubSystem extends PIDSubsystem {
     return this.onTarget();
   }
   public void periodic (){
-    SmartDashboard.putNumber("fourBar Position", pot.getAverageVoltage());
+   // SmartDashboard.putNumber("fourBar Position", pot.getAverageVoltage());
 
+  }
+  public double getPot(){
+    return pot.getAverageVoltage();
   }
 }

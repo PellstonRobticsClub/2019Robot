@@ -48,7 +48,7 @@ public void stop() {
   MecDrive.driveCartesian(0, 0, 0);
 }
 public void periodic(){
-  SmartDashboard.putNumber("drive ticks", FrontLeftMotor.getEncoder().getPosition()*1494);
+//  SmartDashboard.putNumber("drive ticks", FrontLeftMotor.getEncoder().getPosition()*1494);
 }
 public double getPosition(){
 return FrontLeftMotor.getEncoder().getPosition()*1494;

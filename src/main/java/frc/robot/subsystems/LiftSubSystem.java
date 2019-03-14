@@ -66,7 +66,7 @@ public class LiftSubSystem extends PIDSubsystem {
     lift(0);
   }
   public void periodic(){
-    SmartDashboard.putNumber("Lift Position", liftMotor.getSensorCollection().getPulseWidthPosition());
+   // SmartDashboard.putNumber("Lift Position", liftMotor.getSensorCollection().getPulseWidthPosition());
 
   }
 }

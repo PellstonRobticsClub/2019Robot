@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    /*
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
    visionThread = new VisionThread(camera, new GetCountour(), pipeline -> {
@@ -69,7 +70,7 @@ public class Robot extends TimedRobot {
     }
   );
     visionThread.start();
-        
+    */    
     m_oi = new OI();
    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());

@@ -54,7 +54,7 @@ public class FourBarSubSystem extends PIDSubsystem {
     // e.g. yourMotor.set(output);
   }
   public void driveFourBar(double speed){
-    this.disable();
+    //this.disable();
     double outspeed=speed;
     SmartDashboard.putNumber("FourBar Speed", speed);
     if (pot.getAverageVoltage()<1){
@@ -79,5 +79,8 @@ public class FourBarSubSystem extends PIDSubsystem {
   }
   public double getPot(){
     return pot.getAverageVoltage();
+  }
+  public void disablePid(){
+    this.disable();
   }
 }

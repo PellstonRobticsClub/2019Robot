@@ -12,6 +12,7 @@ import java.awt.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Drive2Ball;
+import frc.robot.commands.DriveXFeet;
 import frc.robot.commands.kickWithButton;
 import frc.robot.commands.liftDown;
 import frc.robot.commands.liftUp;
@@ -27,6 +28,7 @@ public class OI {
   public Joystick stick = new Joystick(0);
   public Joystick stick_2 = new Joystick(1);
   public JoystickButton triggerbutton = new JoystickButton(stick, 1);
+  public JoystickButton testButton = new JoystickButton(stick, 11);
   public JoystickButton buttonA = new JoystickButton(stick_2,1);
   public JoystickButton buttonB = new JoystickButton(stick_2,2);
   public JoystickButton buttonX = new JoystickButton(stick_2, 3);
@@ -40,6 +42,7 @@ public class OI {
     buttonX.whileHeld(new shooterTakeIn());
     buttonY.whileHeld(new shooterPushOut());
     buttonRB.whenPressed(new kickWithButton());
+    testButton.whenPressed(new DriveXFeet(10,1));
   }
  
 

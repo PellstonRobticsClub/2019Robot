@@ -7,76 +7,85 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
+
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class Drive2Ball extends PIDCommand {
-  double angle;
-  public Drive2Ball(){ 
-    super("Drive2Ball",.005,0,.02,.021);
-    getPIDController().setInputRange(-180.0, 180.0);
-    getPIDController().setContinuous(true);
-    getPIDController().setAbsoluteTolerance(2);
-    getPIDController().setOutputRange(-.4, .4);
-    requires(Robot.m_DriveTrain);
+public class DriveXFeet extends PIDCommand {
+  private double target;
+  private double maxSpeed;
+  private double prevSpeed =0;
+  private double rampRate = .03;
+  public DriveXFeet(double distance, double mSpeed) {
+    super("DriveXFeet",.000016,0,0,.020);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.m_DriveTrain);
+    maxSpeed = mSpeed;
+    target = (distance*12000);
+    
+    getPIDController().setSetpoint(target);
+    SmartDashboard.putNumber("target", target);
+    setTimeout(3);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
- 
+    while (Robot.m_DriveTrain.getPosition() != 0){
+      Robot.m_DriveTrain.resetEnc();
+    }
+    
+    getPIDController().enable();
+    
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(Robot.getCenterX()-320)>50){
-
-      
-      angle = Robot.m_DriveTrain.gyro.getAngle()+(.0781*Robot.getCenterX()-25);
-      getPIDController().setSetpoint(angle);
-      getPIDController().enable();
-      SmartDashboard.putNumber("angle", angle);
-    }else{
-      getPIDController().disable();
-      Robot.m_DriveTrain.Drive(0, 0, 0);
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; //getPIDController().onTarget(); //isTimedOut()||getPIDController().onTarget();
+    return (Math.abs(Robot.m_DriveTrain.getPosition()-target)<4000 || isTimedOut());
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-  Robot.m_DriveTrain.stop();    
+    Robot.m_DriveTrain.setCoast();
+    getPIDController().disable();
+    
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 
   @Override
   protected double returnPIDInput() {
-    return Robot.m_DriveTrain.gyro.getAngle();
+    return Robot.m_DriveTrain.getPosition();
   }
 
   @Override
   protected void usePIDOutput(double output) {
-    int sign = ( int )Math.signum(output);
-    double minSpeed =.05;
-    double finaloutput = sign*Math.max(minSpeed, Math.abs(output));
-    Robot.m_DriveTrain.Drive(0, 0, finaloutput);
+    int sign =(int)Math.signum(output);
+      double minSpeed=.1;
+      double RampedSpeed;
+      if (Math.abs(output)>prevSpeed+rampRate){
+        RampedSpeed = prevSpeed+rampRate;
+      } else {
+        RampedSpeed = Math.abs(output);
+      }
+    	double finaloutput=sign*Math.min(maxSpeed, Math.max(minSpeed, RampedSpeed));
 
-
+    Robot.m_DriveTrain.Drive(0, -finaloutput, 0);
+    prevSpeed = Math.abs(finaloutput);
   }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class manuallyPivot extends Command {
-  public manuallyPivot() {
+  public manuallyPivot(/*double position*/) {
     requires(Robot.m_shooterPivot);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class manualFourBar extends Command {
-  public manualFourBar() {
+  public manualFourBar(/*double position*/) {
     requires(Robot.m_FourBar);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

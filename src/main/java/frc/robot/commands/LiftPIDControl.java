@@ -10,8 +10,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class liftUp extends Command {
-  public liftUp() {
+public class LiftPIDControl extends Command {
+  private double position;
+  public LiftPIDControl(double pos) {
+    position=pos;
     requires(Robot.m_lift);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -20,18 +22,18 @@ public class liftUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.m_lift.PIDControl(position);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_lift.lift(.75);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.m_lift.isAtPos();
   }
 
   // Called once after isFinished returns true

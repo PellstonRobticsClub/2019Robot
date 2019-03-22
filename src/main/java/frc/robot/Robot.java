@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ResetLift;
 import frc.robot.subsystems.DriveTrainSubSystem;
 import frc.robot.subsystems.FourBarSubSystem;
 import frc.robot.subsystems.LiftSubSystem;
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    /*
+    
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
    visionThread = new VisionThread(camera, new GetCountour(), pipeline -> {
@@ -70,9 +71,9 @@ public class Robot extends TimedRobot {
     }
   );
     visionThread.start();
-    */    
+        
     m_oi = new OI();
-   // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    m_chooser.setDefaultOption("Reset lift", new ResetLift());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
   }

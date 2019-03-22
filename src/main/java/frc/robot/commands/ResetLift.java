@@ -9,12 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.LiftSubSystem;
 
-public class liftUp extends Command {
-  public liftUp() {
-    requires(Robot.m_lift);
+public class ResetLift extends Command {
+  public ResetLift() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires( Robot.m_lift);
   }
 
   // Called just before this Command runs the first time
@@ -25,25 +26,26 @@ public class liftUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_lift.lift(.75);
+    Robot.m_lift.liftDownSlow();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return (Robot.m_lift.downSwitch.get());
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.m_lift.stop();
+    Robot.m_lift.resetEncoder();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    Robot.m_lift.stop();
   }
 }

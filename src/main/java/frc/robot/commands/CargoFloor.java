@@ -8,14 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.RobotMap;
 
-public class Drive2Ball extends CommandGroup {
+public class CargoFloor extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Drive2Ball() {
-    addSequential(new Turn2Ball());
-    
+  public CargoFloor() {
+    addParallel(new fourBarPIDControl(RobotMap.cargoFloorFourBar));
+    addParallel(new LiftPIDControl(RobotMap.cargoFloorLift));
+    addSequential(new pivotPIDControl(RobotMap.cargoFloorPivot));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

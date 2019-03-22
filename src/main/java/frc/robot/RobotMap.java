@@ -13,14 +13,47 @@ package frc.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {
+public  class RobotMap {
+  public static double cargoTopFourBar=0;
+  public static double cargoTopPivot=0;
+  public static double cargoTopLift=0;
+ 
+  public static double cargoMidFourBar=0;
+  public static double cargoMidPivot=0;
+  public static double cargoMidLift=0;
+
+  public static double cargoBotFourBar=0;
+  public static double cargoBotPivot=0;
+  public static double cargoBotLift=0;
+
+  public static double cargoFloorFourBar=0;
+  public static double cargoFloorPivot=0;
+  public static double cargoFloorLift=0;
+
+  public static double hatchTopFourBar=0;
+  public static double hatchTopPivot=0;
+  public static double hatchTopLift=0;
+ 
+  public static double hatchMidFourBar=0;
+  public static double hatchMidPivot=0;
+  public static double hatchMidLift=0;
+
+  public static double hatchBotFourBar=0;
+  public static double hatchBotPivot=0;
+  public static double hatchBotLift=0;
+
+  public static double hatchFloorFourBar=0;
+  public static double hatchFloorPivot=0;
+  public static double hatchFloorLift=0;
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
-  // public static int leftMotor = 1;
-  // public static int rightMotor = 2;
+  // public static static int leftMotor = 1;
+  // public static static int rightMotor = 2;
+public static double pivotMaxTilt;
+public static double fourbarMinTilt;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+  // public static static int rangefinderPort = 1;
+  // public static static int rangefinderModule = 1;
 }

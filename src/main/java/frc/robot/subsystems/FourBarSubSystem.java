@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.commands.manualFourBar;
 
 /**
@@ -63,6 +65,9 @@ public class FourBarSubSystem extends PIDSubsystem {
     if(pot.getAverageVoltage()>4.5){
       outspeed=Math.max(speed, 0);
    }
+   if(speed>0&&Robot.m_shooterPivot.getPosition()<RobotMap.pivotMaxTilt&&pot.getAverageVoltage()>RobotMap.fourbarMinTilt){
+     outspeed=0;
+   }
     FourBarMotor.set(outspeed);
     
   }
@@ -74,7 +79,7 @@ public class FourBarSubSystem extends PIDSubsystem {
     return this.onTarget();
   }
   public void periodic (){
-   // SmartDashboard.putNumber("fourBar Position", pot.getAverageVoltage());
+    SmartDashboard.putNumber("fourBar Position", pot.getAverageVoltage());
 
   }
   public double getPot(){
@@ -82,5 +87,8 @@ public class FourBarSubSystem extends PIDSubsystem {
   }
   public void disablePid(){
     this.disable();
+  }
+  public void Stop(){
+FourBarMotor.set(0);
   }
 }

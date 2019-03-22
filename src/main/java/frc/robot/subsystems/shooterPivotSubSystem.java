@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.commands.manuallyPivot;
 
 /**
@@ -28,7 +30,7 @@ public class shooterPivotSubSystem extends PIDSubsystem {
   public shooterPivotSubSystem() {
 
     // Intert a subsystem name and PID values here
-    super("shooterPivotSubSystem", 1, 2, 3);
+    super("shooterPivotSubSystem", .01, 0, 0);
     pivot_2.follow(pivot);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
@@ -45,18 +47,21 @@ public class shooterPivotSubSystem extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    // Return your input value for the PID loop
+    return pivot.getSensorCollection().getPulseWidthPosition();
+
+     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
     // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
   }
 
   @Override
   protected void usePIDOutput(double output) {
+    drive(output);
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
   }
   public void drive(double speed){
+
 
     double outspeed=speed;
    
@@ -71,7 +76,9 @@ public class shooterPivotSubSystem extends PIDSubsystem {
         outspeed=speed*.5;
       }
     }
-    
+    if(speed>0&&Robot.m_FourBar.getPosition()<RobotMap.fourbarMinTilt&&pivot.getSensorCollection().getPulseWidthPosition()<RobotMap.pivotMaxTilt){
+      outspeed=0;
+    }
    
 
     pivot.set(outspeed);
@@ -85,6 +92,7 @@ public class shooterPivotSubSystem extends PIDSubsystem {
 
   }
   public void stop(){
+    this.disable();
     Kicker.set(0);
   }
   public void periodic(){
@@ -93,5 +101,12 @@ public class shooterPivotSubSystem extends PIDSubsystem {
    // }
    // pTimer++; 
   }
-  
+  public void PIDControl(double position ){
+    this.setSetpoint(position);
+    this.enable();
+  }
+  public boolean isAtPos(){
+    return this.onTarget();
+  }
+ 
 }
